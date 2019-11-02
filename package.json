@@ -1,0 +1,46 @@
+{
+  "name": "shared",
+  "version": "0.0.1",
+  "description": "something shared",
+  "main": "lib/index.js",
+  "module": "es/index.js",
+  "browser": "dist/index.js",
+  "types": "types/index.d.ts",
+  "files": [
+    "/lib",
+    "/es",
+    "/dist",
+    "/types"
+  ],
+  "author": "codpoe.me@gmail.com",
+  "license": "MIT",
+  "scripts": {
+    "dev": "rollup -c -w --environment NODE_ENV:development",
+    "build": "rollup -c --environment NODE_ENV:production",
+    "types": "tsc",
+    "test": "jest",
+    "clean": "rm -rf dist es lib"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.6.4",
+    "@babel/plugin-transform-runtime": "^7.6.2",
+    "@babel/preset-env": "^7.6.3",
+    "@babel/preset-typescript": "^7.6.0",
+    "@types/jest": "^24.0.20",
+    "@typescript-eslint/eslint-plugin": "^2.5.0",
+    "@typescript-eslint/parser": "^2.5.0",
+    "eslint": "^6.6.0",
+    "eslint-config-prettier": "^6.5.0",
+    "eslint-plugin-prettier": "^3.1.1",
+    "jest": "^24.9.0",
+    "prettier": "^1.18.2",
+    "rollup": "^1.25.2",
+    "rollup-plugin-babel": "^4.3.3",
+    "rollup-plugin-terser": "^5.1.2",
+    "tslib": "^1.10.0",
+    "typescript": "^3.6.4"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.6.3"
+  }
+}
