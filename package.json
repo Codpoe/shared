@@ -1,5 +1,5 @@
 {
-  "name": "shared",
+  "name": "@toolman/shared",
   "version": "0.0.1",
   "description": "something shared",
   "main": "lib/index.js",
