@@ -14,6 +14,10 @@
   ],
   "author": "codpoe.me@gmail.com",
   "license": "MIT",
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/Codpoe/shared.git"
+  },
   "scripts": {
     "dev": "rollup -c -w --environment NODE_ENV:development",
     "build": "rollup -c --environment NODE_ENV:production",
