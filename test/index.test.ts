@@ -34,6 +34,30 @@ test('once & emit', () => {
   expect(mockFn2).toBeCalledTimes(1);
 });
 
+test('once -> on -> emit', () => {
+  const mockFn = jest.fn();
+
+  sharedHost.once('test', mockFn);
+  sharedHost.on('test', mockFn);
+  sharedHost.on('*', mockFn);
+  sharedHost.emit('test');
+  sharedHost.emit('test');
+
+  expect(mockFn).toBeCalledTimes(4);
+});
+
+test('on -> once -> emit', () => {
+  const mockFn = jest.fn();
+
+  sharedHost.on('test', mockFn);
+  sharedHost.once('test', mockFn);
+  sharedHost.on('*', mockFn);
+  sharedHost.emit('test');
+  sharedHost.emit('test');
+
+  expect(mockFn).toBeCalledTimes(3);
+});
+
 test('off', () => {
   const mockFn = jest.fn();
   const mockFn2 = jest.fn();

@@ -8,7 +8,7 @@ interface Host {
 export interface Handler {
   (payload?: any): void;
   (name: string, payload?: any): void;
-  __sharedOnce__?: boolean;
+  __sharedOnce__?: string[];
 }
 
 export default (container?: Record<string, any>) => {
@@ -22,13 +22,19 @@ export default (container?: Record<string, any>) => {
   }
 
   const add = (name: string, handler: Handler) => {
-    if (!host.__sharedEvents__[name]) {
-      host.__sharedEvents__[name] = [];
+    let handlers = host.__sharedEvents__[name];
+
+    if (!handlers) {
+      host.__sharedEvents__[name] = handlers = [];
     }
 
-    if (host.__sharedEvents__[name].indexOf(handler) < 0) {
-      host.__sharedEvents__[name].push(handler);
+    const index = handlers.indexOf(handler);
+
+    if (index >= 0) {
+      handlers.splice(index, 1);
     }
+
+    handlers.push(handler);
   };
 
   const execute = (name: string, ...rest: any[]) => {
@@ -41,19 +47,35 @@ export default (container?: Record<string, any>) => {
     handlers.slice().forEach((handler, index) => {
       handler(...rest);
 
-      if (handler.__sharedOnce__) {
+      const onceList = handler.__sharedOnce__ || [];
+      const onceIndex = onceList.indexOf(name);
+
+      if (onceIndex >= 0) {
         handlers.splice(index, 1);
+        onceList.splice(onceIndex, 1);
       }
     });
   };
 
   const fns = {
     on(name: string, handler: Handler) {
+      const onceList = handler.__sharedOnce__ || [];
+      const index = onceList.indexOf(name);
+
+      if (index >= 0) {
+        onceList.splice(index, 1);
+      }
+
       add(name, handler);
     },
 
     once(name: string, handler: Handler) {
-      handler.__sharedOnce__ = true;
+      const onceList = handler.__sharedOnce__ || [];
+
+      if (onceList.indexOf(name) < 0) {
+        handler.__sharedOnce__ = onceList.concat(name);
+      }
+
       add(name, handler);
     },
 
