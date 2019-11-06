@@ -5,7 +5,7 @@ interface Host {
   __sharedEvents__: Events;
 }
 
-interface Handler {
+export interface Handler {
   (payload?: any): void;
   (name: string, payload?: any): void;
   __sharedOnce__?: boolean;
