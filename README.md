@@ -13,13 +13,13 @@ yarn add @toolman/shared
 ```js
 import shared from '@toolman/shared';
 
-const host = shared
+const host = shared();
 
 // `on` & `emit`
 // Note: `once`, `off` are also supported 
 host.on('msg', payload => {
   console.log(payload); // => 'cool'
-})
+});
 
 host.emit('msg', 'cool');
 
